@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { put } from "@vercel/blob";
+import fs from "fs/promises";
+import path from "path";
 
 const prisma = new PrismaClient();
 
@@ -31,14 +32,21 @@ export async function POST(req: Request) {
     }
 
     if (imageFile && imageFile.name) {
-      const fileName = `products/${Date.now()}_${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+      const buffer = Buffer.from(await imageFile.arrayBuffer());
+      const uploadDir = path.join(process.cwd(), "public/uploads/products");
       
-      const { url } = await put(fileName, imageFile, {
-        access: 'public',
-        addRandomSuffix: true,
-      });
+      // Créer le dossier s'il n'existe pas
+      try {
+        await fs.access(uploadDir);
+      } catch {
+        await fs.mkdir(uploadDir, { recursive: true });
+      }
+
+      const fileName = `${Date.now()}_${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+      const filePath = path.join(uploadDir, fileName);
+      await fs.writeFile(filePath, buffer);
       
-      imageUrl = url;
+      imageUrl = `/uploads/products/${fileName}`;
     }
 
     // Sauvegarde en Base
