@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { promises as fs } from "fs";
-import path from "path";
+import { put } from "@vercel/blob";
 
 const prisma = new PrismaClient();
 
@@ -32,22 +31,14 @@ export async function POST(req: Request) {
     }
 
     if (imageFile && imageFile.name) {
-      const buffer = Buffer.from(await imageFile.arrayBuffer());
-      const fileName = Date.now() + "_" + imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+      const fileName = `products/${Date.now()}_${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
       
-      const uploadDir = path.join(process.cwd(), "public", "uploads", "products");
+      const { url } = await put(fileName, imageFile, {
+        access: 'public',
+        addRandomSuffix: true,
+      });
       
-      // Essayer de créer le dossier récursivement
-      try {
-        await fs.access(uploadDir);
-      } catch (e) {
-        await fs.mkdir(uploadDir, { recursive: true });
-      }
-
-      const filePath = path.join(uploadDir, fileName);
-      await fs.writeFile(filePath, buffer);
-      
-      imageUrl = `/uploads/products/${fileName}`;
+      imageUrl = url;
     }
 
     // Sauvegarde en Base

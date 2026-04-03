@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { PrismaClient } from "@prisma/client";
-import { promises as fs } from "fs";
-import path from "path";
+import { put } from "@vercel/blob";
 
 const prisma = new PrismaClient();
 
@@ -21,18 +20,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Fichier manquant" }, { status: 400 });
     }
 
-    const uploadDir = path.join(process.cwd(), "public/uploads/avatars");
-    await fs.mkdir(uploadDir, { recursive: true });
+    const fileExtension = (file as File).name.split('.').pop();
+    const fileName = `avatars/avatar_${session.user.email.replace(/[@.]/g, '_')}_${Date.now()}.${fileExtension}`;
 
-    // Nettoyer l'ancien fichier ? Trop complexe pour ce snippet, on écrase ou crée un unique.
-    const fileExtension = file.name.split('.').pop();
-    const fileName = `avatar_${session.user.email.replace(/[@.]/g, '_')}_${Date.now()}.${fileExtension}`;
-    const filePath = path.join(uploadDir, fileName);
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(filePath, buffer);
-
-    const imageUrl = `/uploads/avatars/${fileName}`;
+    const { url: imageUrl } = await put(fileName, file as File, {
+      access: 'public',
+      addRandomSuffix: true,
+    });
 
     // Mettre à jour l'utilisateur en base
     await prisma.user.update({
