@@ -1,9 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import CheckoutButton from "../components/CheckoutButton";
-
-const prisma = new PrismaClient();
 
 export const revalidate = 0;
 

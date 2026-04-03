@@ -1,11 +1,9 @@
-import { NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { sendDiscordWebhook } from "@/lib/discordWebhook";
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {

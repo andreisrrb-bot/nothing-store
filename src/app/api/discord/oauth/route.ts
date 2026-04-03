@@ -1,10 +1,8 @@
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 const CLIENT_ID = "1489435411054072018";
 const CLIENT_SECRET = "Av_zNJoq5VzU4fyrYxs-J8qtt-JAEpdq";

@@ -1,14 +1,13 @@
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 import Stripe from "stripe";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-04-10",
 });
-const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {

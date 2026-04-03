@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import styles from "../../forum.module.css";
 import ReplyPostForm from "./ReplyPostForm";
@@ -10,8 +10,6 @@ import DeletePostButton from "../../components/DeletePostButton";
 import LiveRepliesList from "./LiveRepliesList";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-
-const prisma = new PrismaClient();
 export const revalidate = 0;
 
 function RankBadge({ xp }: { xp: number | undefined }) {

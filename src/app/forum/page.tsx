@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import styles from "./forum.module.css";
 import SearchBarClient from "@/app/forum/components/SearchBarClient";
-
-const prisma = new PrismaClient();
 
 export const revalidate = 0;
 
