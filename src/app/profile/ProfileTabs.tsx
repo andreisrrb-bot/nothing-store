@@ -9,7 +9,6 @@ export default function ProfileTabs({ user }: { user: any }) {
   const [discordInput, setDiscordInput] = useState(user?.discord || "");
   const [discordAvatar, setDiscordAvatar] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(user?.image || "");
-  const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   useEffect(() => {
@@ -33,33 +32,6 @@ export default function ProfileTabs({ user }: { user: any }) {
       }
     } catch (err) {
       alert("Erreur de connexion.");
-    }
-  };
-
-  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploadingAvatar(true);
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch("/api/user/avatar", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setAvatarUrl(data.imageUrl);
-      } else {
-        alert("Upload failed: " + data.error);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred during upload.");
-    } finally {
-      setUploadingAvatar(false);
     }
   };
 
@@ -139,26 +111,19 @@ export default function ProfileTabs({ user }: { user: any }) {
             <div className={styles.settingsCard}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', marginBottom: '2.5rem' }}>
                 <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                  {avatarUrl ? (
-                    <img src={avatarUrl} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  {user?.discord ? (
+                    <img src={user.image || `https://cdn.discordapp.com/embed/avatars/0.png`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Space Grotesk', fontSize: '2rem', color: 'rgba(255,255,255,0.2)' }}>?</div>
                   )}
-                  {uploadingAvatar && (
-                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg viewBox="0 0 50 50" style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }}>
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#fff" strokeWidth="4" strokeDasharray="90, 150" />
-                      </svg>
-                    </div>
-                  )}
                 </div>
                 <div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Profile Picture</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>Upload a new avatar in JPG or PNG format.</p>
-                  <label className="btn btn-outline" style={{ cursor: 'pointer', display: 'inline-block', padding: '0.4rem 1rem', fontSize: '0.85rem' }}>
-                    {uploadingAvatar ? "Uploading..." : "Change Image"}
-                    <input type="file" style={{ display: 'none' }} accept="image/*" onChange={handleAvatarUpload} disabled={uploadingAvatar} />
-                  </label>
+                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Discord Avatar</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                    {user?.discord 
+                      ? "Your profile picture is automatically synced from Discord." 
+                      : "Link your Discord account below to display an avatar."}
+                  </p>
                 </div>
               </div>
 

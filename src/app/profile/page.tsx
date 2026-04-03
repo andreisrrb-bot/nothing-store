@@ -1,12 +1,10 @@
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import styles from "./profile.module.css";
 import SignOutButton from "../../components/SignOutButton";
 import ProfileTabs from "./ProfileTabs";
-
-const prisma = new PrismaClient();
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
