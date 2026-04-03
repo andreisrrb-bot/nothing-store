@@ -1,11 +1,10 @@
+import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import AdminProductManager from "../AdminProductManager";
 import AdminPromoManager from "./AdminPromoManager";
 
-const prisma = new PrismaClient();
 export const revalidate = 0;
 
 export default async function StoreManagerPage() {

@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import fs from "fs/promises";
-import path from "path";
-
-const prisma = new PrismaClient();
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
 export async function POST(req: Request) {
   try {
@@ -31,22 +28,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    if (imageFile && imageFile.name) {
+    if (imageFile && imageFile.name && imageFile.size > 0) {
       const buffer = Buffer.from(await imageFile.arrayBuffer());
-      const uploadDir = path.join(process.cwd(), "public/uploads/products");
       
-      // Créer le dossier s'il n'existe pas
-      try {
-        await fs.access(uploadDir);
-      } catch {
-        await fs.mkdir(uploadDir, { recursive: true });
-      }
-
-      const fileName = `${Date.now()}_${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
-      const filePath = path.join(uploadDir, fileName);
-      await fs.writeFile(filePath, buffer);
-      
-      imageUrl = `/uploads/products/${fileName}`;
+      // Envoi direct vers Cloudinary (pas d'écriture sur le disque local)
+      imageUrl = await uploadToCloudinary(buffer, "products");
     }
 
     // Sauvegarde en Base
