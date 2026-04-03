@@ -64,7 +64,7 @@ export default function LiveRepliesList({
                    <img src={post.author.image} alt="Avatar" />
                  ) : '?'}
               </div>
-              <strong>{post.author.name || post.author.email.split('@')[0]}</strong>
+              <strong>{post.author.name || post.author.email?.split('@')[0] || "Unknown"}</strong>
               <RankBadge xp={post.author.xp} />
               {post.author.role === 'ADMIN' && <span className={styles.adminBadge}>ADMIN</span>}
               {post.author.orders && post.author.orders.length > 0 && (
@@ -80,7 +80,7 @@ export default function LiveRepliesList({
                 <a href={`#post-${post.replyTo.id}`} style={{ textDecoration: 'none' }}>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.8rem 1rem', borderRadius: '8px', borderLeft: '3px solid #444', marginBottom: '1.5rem', cursor: 'pointer', transition: 'all 0.2s' }}>
                     <div style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.4rem', fontFamily: 'Inter', fontWeight: 500 }}>
-                      Replying to @{post.replyTo.author.name || post.replyTo.author.email.split('@')[0]}
+                      Replying to @{post.replyTo.author.name || post.replyTo.author.email?.split('@')[0] || "Unknown"}
                     </div>
                     <div style={{ fontSize: '0.9rem', color: '#ccc', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {post.replyTo.content.replace("<!-- TARGET:TOPIC -->\n", "").substring(0, 150)}...
@@ -110,7 +110,7 @@ export default function LiveRepliesList({
                     initialLikesCount={post.likes.length} 
                     initialLiked={currentUserId ? post.likes.some((like: any) => like.userId === currentUserId) : false} 
                  />
-                 <QuoteButton postId={post.id} authorName={post.author.name || post.author.email.split('@')[0]} />
+                 <QuoteButton postId={post.id} authorName={post.author.name || post.author.email?.split('@')[0] || "Unknown"} />
                  {currentUserId && (currentUserId === post.authorId || topicAuthorRole === "ADMIN") && (
                    <DeletePostButton postId={post.id} />
                  )}

@@ -142,7 +142,7 @@ export default async function AdminDashboard() {
                {recentTopics.map(topic => (
                   <div key={topic.id} style={{ padding: '1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px' }}>
                      <div style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.5rem' }}>
-                        By {topic.author.name || topic.author.email.split('@')[0]} in {topic.category.name}
+                        By {topic.author.name || topic.author.email?.split('@')[0] || "Unknown"} in {topic.category.name}
                      </div>
                      <div style={{ fontWeight: 600, marginBottom: '1rem', fontSize: '1.1rem' }}>{topic.title}</div>
                      <AdminDeleteContentButton type="TOPIC" id={topic.id} previewStr={topic.title} />
@@ -159,7 +159,7 @@ export default async function AdminDashboard() {
                {recentPosts.map(post => (
                   <div key={post.id} style={{ padding: '1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px' }}>
                      <div style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.5rem' }}>
-                        By {post.author.name || post.author.email.split('@')[0]} in Topic "{post.topic.title}"
+                        By {post.author.name || post.author.email?.split('@')[0] || "Unknown"} in Topic "{post.topic.title}"
                      </div>
                      <div style={{ color: '#ccc', marginBottom: '1rem', fontSize: '0.9rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {post.content.replace("<!-- TARGET:TOPIC -->\n", "")}

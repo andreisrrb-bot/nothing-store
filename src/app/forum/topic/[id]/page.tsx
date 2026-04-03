@@ -83,7 +83,7 @@ export default async function TopicPage({ params }: { params: { id: string } }) 
               <img src={topic.author.image} alt="Avatar" />
             ) : '?'}
           </div>
-          <strong>{topic.author.name || topic.author.email.split('@')[0]}</strong>
+          <strong>{topic.author.name || topic.author.email?.split('@')[0] || "Unknown"}</strong>
           <RankBadge xp={topic.author.xp} />
           {topic.author.role === 'ADMIN' && <span className={styles.adminBadge}>ADMIN</span>}
           {topic.author.orders && topic.author.orders.length > 0 && (
@@ -99,7 +99,7 @@ export default async function TopicPage({ params }: { params: { id: string } }) 
               initialUpvotesCount={topic.upvotes.length}
               initialUpvoted={currentUserId ? topic.upvotes.some(upvote => upvote.userId === currentUserId) : false}
             />
-            <QuoteButton postId={topic.id} authorName={topic.author.name || topic.author.email.split('@')[0]} />
+            <QuoteButton postId={topic.id} authorName={topic.author.name || topic.author.email?.split('@')[0] || "Unknown"} />
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default async function TopicPage({ params }: { params: { id: string } }) 
         initialPosts={topic.posts}
         topicId={topic.id}
         topicAuthorRole={topic.author.role}
-        topicAuthorName={topic.author.name || topic.author.email.split('@')[0]}
+        topicAuthorName={topic.author.name || topic.author.email?.split('@')[0] || "Unknown"}
         currentUserId={currentUserId}
       />
 
