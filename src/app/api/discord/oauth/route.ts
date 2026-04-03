@@ -1,25 +1,26 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 const CLIENT_ID = "1489435411054072018";
 const CLIENT_SECRET = "Av_zNJoq5VzU4fyrYxs-J8qtt-JAEpdq";
-const REDIRECT_URI = (process.env.NEXTAUTH_URL || "http://localhost:3000").replace(/\/$/, "") + "/api/discord/oauth";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
+    const origin = req.nextUrl.origin;
+    const REDIRECT_URI = `${origin}/api/discord/oauth`;
     const session = await getServerSession(authOptions);
     if (!session || !session.user || !session.user.email) {
-      return NextResponse.redirect(new URL("/profile?error=unauthorized", process.env.NEXTAUTH_URL));
+      return NextResponse.redirect(new URL("/profile?error=unauthorized", origin));
     }
 
     const { searchParams } = new URL(req.url);
     const code = searchParams.get('code');
 
     if (!code) {
-      return NextResponse.redirect(new URL("/profile?error=no_code", process.env.NEXTAUTH_URL));
+      return NextResponse.redirect(new URL("/profile?error=no_code", origin));
     }
 
     // 1. Echanger le code contre un token
@@ -37,7 +38,7 @@ export async function GET(req: Request) {
 
     const tokenData = await tokenResponse.json();
     if (!tokenData.access_token) {
-      return NextResponse.redirect(new URL("/profile?error=discord_token_failed", process.env.NEXTAUTH_URL));
+      return NextResponse.redirect(new URL("/profile?error=discord_token_failed", origin));
     }
 
     // 2. Utiliser le token pour récupérer les infos Discord de l'utilisateur
@@ -49,7 +50,7 @@ export async function GET(req: Request) {
 
     const discordUser = await userResponse.json();
     if (!discordUser.id) {
-      return NextResponse.redirect(new URL("/profile?error=discord_user_failed", process.env.NEXTAUTH_URL));
+      return NextResponse.redirect(new URL("/profile?error=discord_user_failed", origin));
     }
 
     // Construit l'URL formelle de l'avatar fourni par Discord
@@ -67,10 +68,11 @@ export async function GET(req: Request) {
     });
 
     // Retour propre vers le profil
-    return NextResponse.redirect(new URL("/profile", process.env.NEXTAUTH_URL));
+    return NextResponse.redirect(new URL("/profile", origin));
     
   } catch (error) {
     console.error(error);
-    return NextResponse.redirect(new URL("/profile?error=internal_error", process.env.NEXTAUTH_URL));
+    const origin = req.nextUrl.origin;
+    return NextResponse.redirect(new URL("/profile?error=internal_error", origin));
   }
 }
