@@ -7,12 +7,10 @@ export default function ProfileTabs({ user }: { user: any }) {
   const [activeTab, setActiveTab] = useState("orders");
   const [nameInput, setNameInput] = useState(user?.name || "");
   const [discordInput, setDiscordInput] = useState(user?.discord || "");
-  const [discordAvatar, setDiscordAvatar] = useState<string | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState(user?.image || "");
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   useEffect(() => {
-    // Suppression de l'ancienne vérification d'API obsolète
+    // Sync logic if needed
   }, []);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -112,7 +110,11 @@ export default function ProfileTabs({ user }: { user: any }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', marginBottom: '2.5rem' }}>
                 <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
                   {user?.discord ? (
-                    <img src={user.image || `https://cdn.discordapp.com/embed/avatars/0.png`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img 
+                      src={user.image?.startsWith('http') ? user.image : `https://cdn.discordapp.com/embed/avatars/0.png`} 
+                      alt="Discord Avatar" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                    />
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Space Grotesk', fontSize: '2rem', color: 'rgba(255,255,255,0.2)' }}>?</div>
                   )}
