@@ -9,7 +9,7 @@ export const revalidate = 0;
 
 export default async function ForumHome() {
   // Try to fetch categories. If the DB push wasn't run, this will throw an error.
-  let categories: any[] = [];
+  let categories: any = [];
   try {
     categories = await prisma.forumCategory.findMany({
       include: {
@@ -53,7 +53,7 @@ export default async function ForumHome() {
             <p style={{ color: 'var(--text-secondary)' }}>No categories found or database sync required.</p>
           </div>
         ) : (
-          categories.map(category => (
+          categories.map((category: any) => (
             <Link href={`/forum/category/${category.id}`} key={category.id} className={`glass ${styles.categoryCard}`}>
               <div>
                 <h2 className={styles.categoryName}>
