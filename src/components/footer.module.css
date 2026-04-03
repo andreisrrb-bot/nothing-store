@@ -1,0 +1,81 @@
+.footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 6rem 2rem 2rem 2rem;
+  margin-top: 6rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(3, 3, 3, 0.95) 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.brandSection {
+  flex: 1;
+  min-width: 300px;
+}
+
+.brandName {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.brandDesc {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 320px;
+  font-size: 0.95rem;
+}
+
+.linksSection {
+  display: flex;
+  gap: 6rem;
+  flex-wrap: wrap;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.column h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.column a {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color 0.3s, transform 0.3s;
+  display: inline-block;
+  transform-origin: left;
+}
+
+.column a:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.bottomBar {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  font-family: 'VT323', monospace;
+  letter-spacing: 2px;
+}

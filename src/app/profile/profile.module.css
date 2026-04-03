@@ -1,0 +1,349 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  min-height: 80vh;
+}
+
+.headerArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 2rem;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.dashboard {
+  display: flex;
+  gap: 4rem;
+}
+
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.sidebarTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebarItem, .sidebarItemActive {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.sidebarItem {
+  color: var(--text-secondary);
+}
+
+.sidebarItem:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+
+.sidebarItemActive {
+  background: var(--text-primary);
+  color: var(--bg-color);
+  font-weight: 500;
+}
+
+.mainPanel {
+  flex: 1;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.panelHeader h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.orderCount {
+  font-family: 'VT323', monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.emptyState {
+  background: var(--glass-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.tableContainer {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 1.2rem 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 500;
+}
+
+.table td {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.table tr:hover {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.productCell strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.dateCell {
+  color: var(--text-secondary);
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.statusSuccess {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.statusPending {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.textRight {
+  text-align: right;
+}
+
+.actionCell {
+  text-align: right;
+}
+
+.downloadBtn {
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.downloadBtn:hover {
+  color: #aaaaaa;
+}
+
+.lockedBtn {
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+/* Nouvelles extensions : Settings & Payment */
+.settingsCard {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.formRow label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.inputReadOnly {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  cursor: not-allowed;
+  outline: none;
+}
+
+.inputActive {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputActive:focus {
+  border-color: #fff;
+}
+
+.dangerZone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.02);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.dangerBtn {
+  background: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.dangerBtn:hover {
+  background: #ef4444;
+  color: #000;
+}
+
+.paymentFlex {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.virtualCard {
+  width: 280px;
+  height: 170px;
+  background: linear-gradient(135deg, #222 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.virtualCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+}
+
+.cardChip {
+  width: 35px;
+  height: 25px;
+  background: linear-gradient(135deg, #d4af37 0%, #aa8000 100%);
+  border-radius: 4px;
+  position: absolute;
+  top: 25px;
+  left: 20px;
+  opacity: 0.8;
+}
+
+.cardNumber {
+  font-family: 'VT323', monospace;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.cardBrand {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.paymentInfo {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .dashboard { flex-direction: column; gap: 2rem; }
+  .sidebar { width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+  .sidebarList { flex-direction: row; overflow-x: auto; }
+  .dangerZone { flex-direction: column; gap: 1.5rem; text-align: center; }
+  .paymentFlex { flex-direction: column; align-items: flex-start; }
+}
