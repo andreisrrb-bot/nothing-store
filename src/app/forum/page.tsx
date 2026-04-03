@@ -9,7 +9,7 @@ export const revalidate = 0;
 
 export default async function ForumHome() {
   // Try to fetch categories. If the DB push wasn't run, this will throw an error.
-  let categories = [];
+  let categories: any[] = [];
   try {
     categories = await prisma.forumCategory.findMany({
       include: {
